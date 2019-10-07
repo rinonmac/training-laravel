@@ -12,3 +12,4 @@
 */
 
 Route::get('/','PenggunaController@index');
+Route::post('/senddata','PenggunaController@store');
