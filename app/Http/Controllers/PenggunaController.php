@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Pengguna;
 use App\position;
 use Illuminate\Http\Request;
+use DB;
 
 class PenggunaController extends Controller
 {
@@ -40,7 +41,25 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'fullname'=>'required|max:30',
+            'username'=>'required|max:30',
+            'password'=>'required|regex:[a-z][A-Z][0-9]',
+            'email'=>'required|email',
+            'phonenumber'=>'required|starts_with:+62',
+            'position'=>'required'
+
+            ]);
+            Pengguna::create([
+                'fullname'=> $request["fullname"],
+                'username'=>$request["username"],
+                'password'=>$request["password"],
+                'email'=>$request["email"],
+                'phonenumber'=>$request['phonenumber'],
+                'position'=>$request['position']
+            ]);
+
+            return redirect('/')->with('status','Data berhasil disimpan'); 
     }
 
     /**
