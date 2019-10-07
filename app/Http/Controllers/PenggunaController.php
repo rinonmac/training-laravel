@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pengguna;
+use App\position;
 use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
@@ -15,7 +16,10 @@ class PenggunaController extends Controller
     public function index()
     {
         $pengguna = pengguna::all();
-        return view ('pages.home', ['pengguna' => $pengguna]);
+        $position = position::all();
+
+
+        return view ('pages.home')->with('pengguna',$pengguna)->with('position',$position);
     }
 
     /**

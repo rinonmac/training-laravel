@@ -15,7 +15,7 @@
             <th scope="col">Username</th>
             <th scope="col">Password</th>
             <th scope="col">Email</th>
-            <th scope="col">Phonenumber</th>
+            <th scope="col">Phone Number</th>
             <th scope="col">Position</th>
         </tr>
     </thead>
@@ -67,9 +67,10 @@
             <div class="form-group">
               <label for="">Position</label>
               <select class="form-control" name="position" id="position">
-                @foreach ( as )
-                    
-                @endforeach
+                <option value="">--Select Position--</option>
+                @for ($i = 0; $i < count($position); $i++)
+                  <option value="{{ $position[$i]->position }}">{{ $position[$i]->position }}</option>
+                @endfor
               </select>
             </div>
         </form>
