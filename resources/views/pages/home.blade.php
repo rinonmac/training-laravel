@@ -52,7 +52,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/" method="post">
+        <div id="insert">
+        <form action="/" method="post" id="dynamic_form">
             @csrf
             <div class="form-group">
                 <label for="">Your Name</label>
@@ -115,11 +116,13 @@
             </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        <input type="submit" class="btn btn-primary" value="Add Data">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" id="btnAdd" class="btn btn-secondary">Add Form</button>
+          <input type="submit" class="btn btn-primary" value="Add Data">
       </div>
-      </form>
+    </form>
     </div>
   </div>
+</div>
 </div>
 @endsection
