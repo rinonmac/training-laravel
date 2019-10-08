@@ -22,6 +22,7 @@
             <th scope="col">Email</th>
             <th scope="col">Phone Number</th>
             <th scope="col">Position</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -64,7 +65,7 @@
             </div>
             <div class="form-group">
                 <label for="">Username</label>
-                <input class="form-control" type="text" name="username" id="username" placeholder="Username" value="{{ old('username') }}">
+                <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username" placeholder="Username" value="{{ old('username') }}">
                 @error('username')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -73,7 +74,7 @@
             </div>
             <div class="form-group">
               <label for="">Password</label>
-              <input class="form-control" type="text" name="password" id="password" placeholder="Password" value="{{ old('password') }}">
+              <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" placeholder="Password" value="{{ old('password') }}">
               @error('password')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -82,7 +83,7 @@
             </div>
             <div class="form-group">
               <label for="">E-Mail</label>
-              <input class="form-control" type="text" name="email" id="email" placeholder="E-Mail" value="{{ old('email') }}">
+              <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" placeholder="E-Mail" value="{{ old('email') }}">
               @error('email')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -91,8 +92,8 @@
             </div>
             <div class="form-group">
               <label for="">Phone Number</label>
-              <input class="form-control" type="text" name="phonenumber" id="phonenumber" placeholder="Starts with +62" value="{{ old('phonenumber') }}">
-              @error('password')
+              <input class="form-control @error('phonenumber') is-invalid @enderror" type="text" name="phonenumber" id="phonenumber" placeholder="Starts with +62" value="{{ old('phonenumber') }}">
+              @error('phonenumber')
                 <div class="invalid-feedback">
                   {{ $message }}
                 </div>
@@ -100,7 +101,7 @@
             </div>
             <div class="form-group">
               <label for="">Position</label>
-              <select class="form-control" name="position" id="position">
+              <select class="form-control @error('position') is-invalid @enderror" name="position" id="position">
                 <option value="">--Select Position--</option>
                 @for ($i = 0; $i < count($position); $i++)
                   <option value="{{ $position[$i]->position }}">{{ $position[$i]->position }}</option>
@@ -112,12 +113,12 @@
                 </div>
               @enderror
             </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
         <input type="submit" class="btn btn-primary" value="Add Data">
       </div>
+      </form>
     </div>
   </div>
 </div>
