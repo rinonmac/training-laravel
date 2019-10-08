@@ -59,7 +59,7 @@ class PenggunaController extends Controller
                 'position'=>$request['position']
             ]);
 
-            return redirect('/')->with('status','Data berhasil disimpan'); 
+            return redirect('/')->with('status','Data berhasil disimpan');
     }
 
     /**
