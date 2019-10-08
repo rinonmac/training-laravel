@@ -19237,6 +19237,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./jquery-3.4.1 */ "./resources/js/jquery-3.4.1.js");
 
+__webpack_require__(/*! ./dynamicform */ "./resources/js/dynamicform.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -19268,6 +19270,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/dynamicform.js":
+/*!*************************************!*\
+  !*** ./resources/js/dynamicform.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  var i = 1;
+  $(document).on('click', '.btn_close', function () {
+    var button_id = $(this).attr("id");
+    $('#ModalCreateData' + button_id + '').remove();
+  });
+  $('#btnAdd').click(function () {
+    i++;
+    $('#insert').append("\n        <form action=\"/\" method=\"post\" id=\"dynamic_form\">\n            @csrf\n            <div class=\"form-group\">\n                <label for=\"\">Your Name</label>\n                <input class=\"form-control @error('fullname') is-invalid @enderror\" type=\"text\" name=\"fullname\" id=\"fullname\" placeholder=\"Full Name\" value=\"{{ old('fullname') }}\">\n                @error('fullname')\n                  <div class=\"invalid-feedback\">\n                    {{ $message }}\n                  </div>\n                @enderror\n            </div>\n            <div class=\"form-group\">\n                <label for=\"\">Username</label>\n                <input class=\"form-control @error('username') is-invalid @enderror\" type=\"text\" name=\"username\" id=\"username\" placeholder=\"Username\" value=\"{{ old('username') }}\">\n                @error('username')\n                  <div class=\"invalid-feedback\">\n                    {{ $message }}\n                  </div>\n                @enderror\n            </div>\n            <div class=\"form-group\">\n              <label for=\"\">Password</label>\n              <input class=\"form-control @error('password') is-invalid @enderror\" type=\"password\" name=\"password\" id=\"password\" placeholder=\"Password\" value=\"{{ old('password') }}\">\n              @error('password')\n                <div class=\"invalid-feedback\">\n                  {{ $message }}\n                </div>\n              @enderror\n            </div>\n            <div class=\"form-group\">\n              <label for=\"\">E-Mail</label>\n              <input class=\"form-control @error('email') is-invalid @enderror\" type=\"text\" name=\"email\" id=\"email\" placeholder=\"E-Mail\" value=\"{{ old('email') }}\">\n              @error('email')\n                <div class=\"invalid-feedback\">\n                  {{ $message }}\n                </div>\n              @enderror\n            </div>\n            <div class=\"form-group\">\n              <label for=\"\">Phone Number</label>\n              <input class=\"form-control @error('phonenumber') is-invalid @enderror\" type=\"text\" name=\"phonenumber\" id=\"phonenumber\" placeholder=\"Starts with +62\" value=\"{{ old('phonenumber') }}\">\n              @error('phonenumber')\n                <div class=\"invalid-feedback\">\n                  {{ $message }}\n                </div>\n              @enderror\n            </div>\n            <div class=\"form-group\">\n              <label for=\"\">Position</label>\n              <select class=\"form-control @error('position') is-invalid @enderror\" name=\"position\" id=\"position\">\n                <option value=\"\">--Select Position--</option>\n                @for ($i = 0; $i < count($position); $i++)\n                  <option value=\"{{ $position[$i]->position }}\">{{ $position[$i]->position }}</option>\n                @endfor\n              </select>\n              @error('position')\n                <div class=\"invalid-feedback\">\n                  {{ $message }}\n                </div>\n              @enderror\n            </div>\n      </div>\n    </form>\n    ");
+  });
+});
 
 /***/ }),
 
