@@ -13,3 +13,4 @@
 
 Route::get('/','PenggunaController@index');
 Route::post('/','PenggunaController@store');
+Route::post('/{pengguna}','PenggunaController@destroy');
