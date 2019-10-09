@@ -44,14 +44,15 @@ class PenggunaController extends Controller
         $request->validate([
             'fullname'=>'required|max:30',
             'username'=>'required|max:30',
-            'password'=>'required|regex:[a-z][A-Z][0-9]',
+            'password'=>'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
             'email'=>'required|email',
             'phonenumber'=>'required|starts_with:+62',
             'position'=>'required'
 
             ]);
+
             Pengguna::create([
-                'fullname'=> $request["fullname"],
+                'full_name'=> $request["fullname"],
                 'username'=>$request["username"],
                 'password'=>$request["password"],
                 'email'=>$request["email"],
@@ -104,6 +105,7 @@ class PenggunaController extends Controller
      */
     public function destroy(Pengguna $pengguna)
     {
-        //
+        Pengguna::destroy($pengguna->id);
+        return redirect ('/')->with('status','Data berhasil dihapus');
     }
 }
