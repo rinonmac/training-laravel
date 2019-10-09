@@ -54,7 +54,7 @@ class PenggunaController extends Controller
             Pengguna::create([
                 'full_name'=> $request["fullname"],
                 'username'=>$request["username"],
-                'password'=>$request["password"],
+                'password'=>md5($request["password"]),
                 'email'=>$request["email"],
                 'phonenumber'=>$request['phonenumber'],
                 'position'=>$request['position']
