@@ -139,7 +139,7 @@
       <div class="modal-body">
         <form action="{{ $pgn->id }}" method="post" class="d-inline">
         @csrf
-        <h5>Are you sure to delete <span>{{ $pgn->full_name }}</span> ?</h5>
+        <h5>Are you sure to delete?</h5>
       </div>
       <div class="modal-footer">
           <button class="btn btn-danger">Delete</button>
@@ -151,16 +151,16 @@
 </div>
 <script>
 $(document).ready(function () {
-    var i = 1
+    var i = 1;
 
     $(document).on('click', '.btn_close', function () {
         var button_id = $(this).attr("id");
-        $('#dynamic_form' + button_id + '').remove();
+        $('#dynamic_form_' + button_id + '').remove();
     });
     $('#btnAdd').click(function () {
         i++;
         $('#insert').append(`
-        <form action="/" method="post" id="dynamic_form `+i+`">
+        <form action="/" method="post" id="dynamic_form_`+i+`">
           <button type="button" id="`+i+`" class="btn btn-danger btn_close">Close Form</button>
             @csrf
             <div class="form-group">
