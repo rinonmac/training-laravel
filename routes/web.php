@@ -14,3 +14,5 @@
 Route::get('/','PenggunaController@index');
 Route::post('/','PenggunaController@store');
 Route::post('/{pengguna}','PenggunaController@destroy');
+Route::get('/{pengguna}/edit','PenggunaController@edit');
+Route::patch('/{pengguna}','PenggunaController@update');
