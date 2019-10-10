@@ -12,7 +12,7 @@
 	</div>
 @endif
 {{-- List User --}}
-<table class="table">
+<table class="table table-responsive-md">
     <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
@@ -35,7 +35,8 @@
             <td>{{$pgn->email}}</td>
             <td>{{$pgn->phonenumber}}</td>
             <td>{{$pgn->position}}</td>
-            <td><button class="btn btn-danger" data-toggle="modal" data-target="#ModalDeleteData">Delete</button></td>
+            <td><a href="{{ $pgn->id }}/edit" class="btn btn-info d-inline">Edit</a></td>
+            <td><button class="btn btn-danger d-inline" data-toggle="modal" data-target="#ModalDeleteData">Delete</button></td>
         </tr>
     @endforeach
     </tbody>
