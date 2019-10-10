@@ -50,7 +50,7 @@ class PenggunaController extends Controller
             'position'=>'required'
 
             ]);
-
+            
             Pengguna::create([
                 'full_name'=> $request["fullname"],
                 'username'=>$request["username"],
@@ -59,6 +59,7 @@ class PenggunaController extends Controller
                 'phonenumber'=>$request['phonenumber'],
                 'position'=>$request['position']
             ]);
+            
 
             return redirect('/')->with('status','Data berhasil disimpan');
     }
@@ -82,7 +83,8 @@ class PenggunaController extends Controller
      */
     public function edit(Pengguna $pengguna)
     {
-        //
+        $position = position::all();
+        return view ('pages.edit')->with('pengguna',$pengguna)->with('position',$position);;
     }
 
     /**
@@ -94,7 +96,25 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, Pengguna $pengguna)
     {
-        //
+        $request->validate([
+            'fullname'=>'required|max:30',
+            'username'=>'required|max:30',
+            'password'=>'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
+            'email'=>'required|email',
+            'phonenumber'=>'required|starts_with:+62',
+            'position'=>'required'
+
+            ]);
+        Pengguna::where('id',$pengguna->id)
+                    ->update([
+                        'full_name'=> $request["fullname"],
+                        'username'=>$request["username"],
+                        'password'=>md5($request["password"]),
+                        'email'=>$request["email"],
+                        'phonenumber'=>$request['phonenumber'],
+                        'position'=>$request['position']
+                    ]);
+        return redirect ('/')->with('status','Data Berhasil diubah!');
     }
 
     /**
