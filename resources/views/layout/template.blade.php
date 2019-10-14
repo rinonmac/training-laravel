@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ mix ('/css/app.css')}}">
     {{-- JS & JQuery --}}
     <script src="{{ asset('/js/app.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 </head>
 <body>
