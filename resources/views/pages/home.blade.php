@@ -58,7 +58,7 @@
             @csrf
             <div class="form-group">
                 <label for="">Your Name</label>
-                <input class="form-control @error('fullname') is-invalid @enderror" type="text" name="fullname" id="fullname" placeholder="Full Name" value="{{ old('fullname') }}">
+                <input class="form-control @error('fullname') is-invalid @enderror" type="text" name="fullname[]" id="fullname" placeholder="Full Name" value="">
                 @error('fullname')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -67,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label for="">Username</label>
-                <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username" placeholder="Username" value="{{ old('username') }}">
+                <input class="form-control @error('username') is-invalid @enderror" type="text" name="username[]" id="username" placeholder="Username" value="">
                 @error('username')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -76,7 +76,7 @@
             </div>
             <div class="form-group">
               <label for="">Password</label>
-              <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" placeholder="Password" value="{{ old('password') }}">
+              <input class="form-control @error('password') is-invalid @enderror" type="password" name="password[]" id="password" placeholder="Password" value="">
               @error('password')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -85,7 +85,7 @@
             </div>
             <div class="form-group">
               <label for="">E-Mail</label>
-              <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" placeholder="E-Mail" value="{{ old('email') }}">
+              <input class="form-control @error('email') is-invalid @enderror" type="text" name="email[]" id="email" placeholder="E-Mail" value="">
               @error('email')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -94,7 +94,7 @@
             </div>
             <div class="form-group">
               <label for="">Phone Number</label>
-              <input class="form-control @error('phonenumber') is-invalid @enderror" type="text" name="phonenumber" id="phonenumber" placeholder="Starts with +62" value="{{ old('phonenumber') }}">
+              <input class="form-control @error('phonenumber') is-invalid @enderror" type="text" name="phonenumber[]" id="phonenumber" placeholder="Starts with +62" value="">
               @error('phonenumber')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -103,7 +103,7 @@
             </div>
             <div class="form-group">
               <label for="">Position</label>
-              <select class="form-control @error('position') is-invalid @enderror" name="position" id="position">
+              <select class="form-control @error('position') is-invalid @enderror" name="position[]" id="position">
                 <option value="">--Select Position--</option>
                 @for ($i = 0; $i < count($position); $i++)
                   <option value="{{ $position[$i]->position }}">{{ $position[$i]->position }}</option>
@@ -166,7 +166,7 @@ $(document).ready(function () {
             @csrf
             <div class="form-group">
                 <label for="">Your Name</label>
-                <input class="form-control @error('fullname') is-invalid @enderror" type="text" name="fullname" id="fullname" placeholder="Full Name" value="{{ old('fullname') }}">
+                <input class="form-control @error('fullname') is-invalid @enderror" type="text" name="fullname[]" id="fullname" placeholder="Full Name" value="">
                 @error('fullname')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -175,7 +175,7 @@ $(document).ready(function () {
             </div>
             <div class="form-group">
                 <label for="">Username</label>
-                <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username" placeholder="Username" value="{{ old('username') }}">
+                <input class="form-control @error('username') is-invalid @enderror" type="text" name="username[]" id="username" placeholder="Username" value="">
                 @error('username')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -184,7 +184,7 @@ $(document).ready(function () {
             </div>
             <div class="form-group">
               <label for="">Password</label>
-              <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" placeholder="Password" value="{{ old('password') }}">
+              <input class="form-control @error('password') is-invalid @enderror" type="password" name="password[]" id="password" placeholder="Password" value="">
               @error('password')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -193,7 +193,7 @@ $(document).ready(function () {
             </div>
             <div class="form-group">
               <label for="">E-Mail</label>
-              <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" placeholder="E-Mail" value="{{ old('email') }}">
+              <input class="form-control @error('email') is-invalid @enderror" type="text" name="email[]" id="email[]" placeholder="E-Mail" value="">
               @error('email')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -202,7 +202,7 @@ $(document).ready(function () {
             </div>
             <div class="form-group">
               <label for="">Phone Number</label>
-              <input class="form-control @error('phonenumber') is-invalid @enderror" type="text" name="phonenumber" id="phonenumber" placeholder="Starts with +62" value="{{ old('phonenumber') }}">
+              <input class="form-control @error('phonenumber') is-invalid @enderror" type="text" name="phonenumber[]" id="phonenumber" placeholder="Starts with +62" value="">
               @error('phonenumber')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -227,7 +227,81 @@ $(document).ready(function () {
     </form>
     `);
     });
-});
 
+    // $('#dynamic_form').on('submit', function(event){
+    //             event.preventDefault();
+    //             $.ajaxSetup({
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //                 }
+    //                 });
+    //             $.ajax({
+    //                 url:'{{ route(".") }}',
+    //                 method:'post',
+    //                 data:$(this).serialize(),
+    //                 dataType:'json',
+    //                 beforeSend:function(){
+    //                     $('#save').attr('disabled','disabled');
+    //                 },
+    //                 success:function(data)
+    //                 {
+    //                     if(data.error)
+    //                     {
+    //                         var error_html = '';
+    //                         for(var count = 0; count < data.error.length; count++)
+    //                         {
+    //                             error_html += '<p>'+data.error[count]+'</p>';
+    //                         }
+    //                         $('#result').html('<div class="alert alert-danger">'+error_html+'</div>');
+    //                     }
+    //                     else
+    //                     {
+    //                         $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+    //                     }
+    //                     $('#save').attr('disabled', false);
+    //                 }
+    //             }) 
+    //     }); 
+    // });
+      $('#dynamic_form').submit(function(event) {
+       event.preventDefault();
+
+    $.ajax({
+    url: '.',
+    type: 'POST',
+    data: $(this).serialize(),
+    success: function(data){
+        alert(data);
+        // success logic
+    },
+    error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+        var errors = jqXhr.responseJSON;
+        var errorsHtml = '';
+        $.each(errors['errors'], function (index, value) {
+            errorsHtml += '<ul class="list-group"><li class="list-group-item alert alert-danger">' + value + '</li></ul>';
+        });
+        //I use SweetAlert2 for this
+        swal({
+            title: "Error " + jqXhr.status + ': ' + errorThrown,// this will output "Error 422: Unprocessable Entity"
+            html: errorsHtml,
+            width: 'auto',
+            confirmButtonText: 'Try again',
+            cancelButtonText: 'Cancel',
+            confirmButtonClass: 'btn',
+            cancelButtonClass: 'cancel-class',
+            showCancelButton: true,
+            closeOnConfirm: true,
+            closeOnCancel: true,
+            type: 'error'
+        }, function(isConfirm) {
+            if (isConfirm) {
+                 $('#openModal').click();//this is when the form is in a modal
+            }
+        });
+    };
+  });
+  });
+  )};
+)};
 </script>
 @endsection
