@@ -41,16 +41,69 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'fullname'=>'required|max:30',
-            'username'=>'required|max:30',
-            'password'=>'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
-            'email'=>'required|email',
-            'phonenumber'=>'required|starts_with:+62',
-            'position'=>'required'
+        $validator = Validator::make($request->all(), [
+            'fullname[]'=>'required|max:30',
+            'username[]'=>'required|max:30',
+            'password[]'=>'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
+            'email[]'=>'required|email',
+            'phonenumber[]'=>'required|starts_with:+62',
+            'position[]'=>'required'
 
-            ]);
+        ]);
+
+        if ($validator->fails()) {
+
+            if($request->ajax())
+            {
+                return response()->json(array(
+                    'success' => false,
+                    'message' => 'There are incorect values in the form!',
+                    'errors' => $validator->getMessageBag()->toArray()
+                ), 422);
+            }
+
+            $this->throwValidationException(
+
+                $request, $validator
+
+            );
+
+        }
+        // $request->validate([
+        //     'fullname[]'=>'required|max:30',
+        //     'username[]'=>'required|max:30',
+        //     'password[]'=>'required|regex:/[a-z]/,regex:/[A-Z]/,regex:/[0-9]/',
+        //     'email[]'=>'required|email',
+        //     'phonenumber[]'=>'required|starts_with:+62',
+        //     'position[]'=>'required'
+
+        //     ]);
             
+            // $full_name = $request->fullname;
+            // $username = $request->username;
+            // $password = $request->password;
+            // $email = $request->email;
+            // $phonenumber = $request->phonenumber;
+            // $position = $request->position;
+
+            // for($count = 0; $count < count($full_name); $count++){
+            //     $data = array (
+            //         'fullname' => $full_name[$count],
+            //         'username' => $username[$count],
+            //         'password' => $password[$count],
+            //         'email' => $email[$count],
+            //         'phonenumber' => $phonenumber[$count],
+            //         'position' => $position[$count]
+            //     );
+
+            //     $insert_data[] = $data;
+            // }
+
+            // return $request;
+            // return re
+
+
+
             Pengguna::create([
                 'full_name'=> $request["fullname"],
                 'username'=>$request["username"],
