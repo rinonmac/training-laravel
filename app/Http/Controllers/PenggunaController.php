@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Pengguna;
 use App\position;
+use Validator;
+use Crypt;
 use Illuminate\Http\Request;
 use DB;
 
@@ -41,34 +43,73 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'fullname[]'=>'required|max:30',
-            'username[]'=>'required|max:30',
-            'password[]'=>'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
-            'email[]'=>'required|email',
-            'phonenumber[]'=>'required|starts_with:+62',
-            'position[]'=>'required'
-
-        ]);
-
-        if ($validator->fails()) {
-
-            if($request->ajax())
-            {
-                return response()->json(array(
-                    'success' => false,
-                    'message' => 'There are incorect values in the form!',
-                    'errors' => $validator->getMessageBag()->toArray()
-                ), 422);
+        if($request->ajax()){
+            $rules = array (
+                'fullname.*' => 'required|max:30',
+                'username.*' => 'required|max:30',
+                'password.*' => ['required','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/'],
+                'email.*' => 'required|email',
+                'phonenumber.*' => 'required|starts_with:+62|regex:/[0-9]/',
+                'position.*' => 'required'
+            );
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails()){
+                return response()->json([
+                    'error' => $error->errors()->all()
+                ]);
             }
 
-            $this->throwValidationException(
+            $full_name = $request->fullname;
+            $username = $request->username;
+            $password = $request->password;
+            $email = $request->email;
+            $phonenumber = $request->phonenumber;
+            $position = $request->position;
+            for($count = 0; $count < count($full_name); $count++){
+                $fPassword = Crypt::encryptString($password[$count]);
 
-                $request, $validator
-
-            );
-
+                $data = array(
+                    'full_name' => $full_name[$count],
+                    'username' => $username[$count],
+                    'password' => $fPassword,
+                    'email' => $email[$count],
+                    'phonenumber' => $phonenumber[$count],
+                    'position' => $position[$count]
+                );
+                $insert_data[] = $data;
+            }
+            Pengguna::insert($insert_data);
+            return response()->json(['success'=>'Data Berhasil di Tambahkan']);
         }
+        // $validator = Validator::make($request->all(), [
+        //     'fullname[]'=>'required|max:30',
+        //     'username[]'=>'required|max:30',
+        //     'password[]'=>'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
+        //     'email[]'=>'required|email',
+        //     'phonenumber[]'=>'required|starts_with:+62',
+        //     'position[]'=>'required'
+
+        // ]);
+
+        // if ($validator->fails()) {
+
+        //     if($request->ajax())
+        //     {
+        //         return response()->json(array(
+        //             'success' => false,
+        //             'message' => 'There are incorect values in the form!',
+        //             'errors' => $validator->getMessageBag()->toArray()
+        //         ), 422);
+        //     }
+
+        //     $this->throwValidationException(
+
+        //         $request, $validator
+
+        //     );
+
+        // }
+
         // $request->validate([
         //     'fullname[]'=>'required|max:30',
         //     'username[]'=>'required|max:30',
@@ -104,18 +145,20 @@ class PenggunaController extends Controller
 
 
 
-            Pengguna::create([
-                'full_name'=> $request["fullname"],
-                'username'=>$request["username"],
-                'password'=>md5($request["password"]),
-                'email'=>$request["email"],
-                'phonenumber'=>$request['phonenumber'],
-                'position'=>$request['position']
-            ]);
+            // Pengguna::create([
+            //     'full_name'=> $request["fullname"],
+            //     'username'=>$request["username"],
+            //     'password'=>md5($request["password"]),
+            //     'email'=>$request["email"],
+            //     'phonenumber'=>$request['phonenumber'],
+            //     'position'=>$request['position']
+            // ]);
             
 
-            return redirect('/')->with('status','Data berhasil disimpan');
+            // return redirect('/')->with('status','Data berhasil disimpan');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -123,10 +166,10 @@ class PenggunaController extends Controller
      * @param  \App\Pengguna  $pengguna
      * @return \Illuminate\Http\Response
      */
-    public function show(Pengguna $pengguna)
-    {
-        //
-    }
+    // public function show(Pengguna $pengguna)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
