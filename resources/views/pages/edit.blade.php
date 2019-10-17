@@ -28,7 +28,11 @@
         </div>
         <div class="form-group">
             <label for="">Password</label>
-            <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" placeholder="Password" value="{{ old('password') }}">
+            <input class="form-control @error('password') is-invalid @enderror form-password" type="password" name="password" id="password" placeholder="Password" value="{{ old('password') }}">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input form-checkbox">
+              <label for="" class="form-check-label">Show Password</label>
+            </div>
             @error('password')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -75,4 +79,15 @@
     </div>
     <div class="col-md-3"></div>
 </div>
+<script>
+$(document).ready(function(){
+  $('.form-checkbox').click(function(){
+    if($(this).is(':checked')){
+      $('.form-password').attr('type','text');
+    }else{
+       $('.form-password').attr('type','password'); 
+    }
+  });
+});
+</script>
 @endsection
